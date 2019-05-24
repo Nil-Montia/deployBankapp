@@ -1,0 +1,22 @@
+version: '3.7'
+services:
+  bankapp:
+    image: nilmontia/bankapp
+  mysql:
+    image: mysql:5.7
+    environment:
+        - MYSQL_ROOT_PASSWORD=password
+        - MYSQL_DATABASE=bank
+    volumes:
+        - type: volume
+          source: mysql
+          target: /var/lib/mysql
+  nginx:
+    image: nilmontia/nginxbank
+    ports:
+    - target: 80
+      published: 80
+    depends_on:
+      - bankapp
+volumes:
+  mysql:
